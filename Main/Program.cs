@@ -1,4 +1,6 @@
 ﻿
+using System.Reflection.Emit;
+
 internal class Program
 {
     static void ConsoleOutPut(string str, int number)
@@ -71,13 +73,53 @@ internal class Program
         else
             MaxNumberMoreThanOnce(matrx, maxEl - 1);
     }
+    static void NumberRowsHaveNtZero(int[,] matrx)
+    {
+        int number = 0;
+        for(int i = 0;i < matrx.GetLength(0); i++)
+        {
+            int check=0;
+            for (int j = 0;j < matrx.GetLength(1); j++)
+            {
+                if (matrx[i, j] == 0)
+                {
+                    check = 1;
+                    continue;
+                }
+            }
+            if (check!=1)
+                number++;         
+        }
+        ConsoleOutPut("Кількість рядків, які не містять жодного нульового елемента", number);
+    }
+    static void NumberColumnHaveZero(int[,] matrx)
+    {
+        int number = 0;
+        for (int i = 0; i < matrx.GetLength(1); i++)
+        {
+            int check = 0;
+            for (int j = 0; j < matrx.GetLength(0); j++)
+            {
+                if (matrx[j, i] == 0)
+                {
+                    check = 1;
+                    continue;
+                }
+            }
+            if (check == 1)
+                number++;
+        }
+        ConsoleOutPut("Кількість стовпців, які містять хоча б один нульовий елемент", number);
+    }
     private static void Main()
     { 
-        int [,]matrx = new int[5,5];
+        int [,]matrx = new int[5,7];
         MatrxAdd(matrx);  
         ConsoleMatrxOutPut(matrx);
         PositiveNumbers(matrx);
         int max = FindMax(matrx);
         MaxNumberMoreThanOnce(matrx,max);
+        NumberRowsHaveNtZero(matrx);
+        NumberColumnHaveZero(matrx);
     }
 }
