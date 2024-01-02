@@ -1,7 +1,9 @@
-﻿internal class Program
+﻿
+internal class Program
 {
     static void ConsoleOutPut(string str, int number)
     {
+        Console.OutputEncoding = System.Text.Encoding.Default;
         Console.WriteLine($"{str} {number}");
     }
     static void MatrxAdd(int[,] matrx)
@@ -11,7 +13,7 @@
         {
             for (int j = 0; j < matrx.GetLength(1); j++)
             {
-                matrx[i, j] = rnd.Next(20) - 10;
+                matrx[i, j] = rnd.Next(21) - 10;
             }
         }
     }
@@ -27,10 +29,55 @@
             Console.WriteLine();
         }
     }
+    static void PositiveNumbers(int [,]matrx)
+    {
+        int positiveNumber=0;
+        for(int i = 0;i < matrx.GetLength(0); i++)
+        {
+            for ( int j = 0;j < matrx.GetLength(1); j++)
+            {
+                if(matrx[i,j]>0)
+                    positiveNumber++;
+            }
+        }
+        ConsoleOutPut("Кількість додатніх елементів", positiveNumber);
+    }
+    static int FindMax(int[,] matrx)
+    {
+        int maxEl = matrx[0, 0];
+        for (int i = 0; i < matrx.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrx.GetLength(1); j++)
+            {
+                if (matrx[i, j] > maxEl)
+                    maxEl = matrx[i, j];
+            }
+        }
+        return maxEl;
+    }
+    static void MaxNumberMoreThanOnce(int[,] matrx, int maxEl)
+    {
+        int maxNumber = 0;
+        for (int i = 0; i < matrx.GetLength(0); i++)
+        {
+            for (int j = 0; j < matrx.GetLength(1); j++)
+            {
+                if (maxEl == matrx[i, j])
+                    maxNumber++;
+            }     
+        }
+        if (maxNumber > 1)
+            ConsoleOutPut("Максимальне із чисел, що зустрічається в заданій матриці більше одного разу", maxEl);
+        else
+            MaxNumberMoreThanOnce(matrx, maxEl - 1);
+    }
     private static void Main()
     { 
-        int [,]matrx = new int[10,10];
+        int [,]matrx = new int[5,5];
         MatrxAdd(matrx);  
         ConsoleMatrxOutPut(matrx);
+        PositiveNumbers(matrx);
+        int max = FindMax(matrx);
+        MaxNumberMoreThanOnce(matrx,max);
     }
 }
