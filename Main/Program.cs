@@ -243,6 +243,34 @@
         }
         ConsoleOutPut("Мінімум серед сум модулів елементів діагоналей, паралельних побічній діагоналі матриці", sum);
     }
+    static void SumOfElInColumnHaveLeastOneNegEl(int[,] matrx)
+    {
+        for (int i = 0; i < matrx.GetLength(1); i++)
+        {
+            int sum = 0;
+            int checkSum = 1;
+            for (int j = 0; j < matrx.GetLength(0); j++)
+            {
+                sum += matrx[j, i];
+                if (matrx[j, i] < 0)
+                    checkSum = 0;
+            }
+            if (checkSum == 0)
+                ConsoleOutPut($"Сума елементів в {i + 1} стовпці, який містить хоча б один від’ємний елемент", sum);
+        }
+    }
+    static void TranspondedMatrix(int[,] matrx)
+    {
+        int[,] Tmatrx = new int[matrx.GetLength(1), matrx.GetLength(0)];
+        for (int i = 0;i < matrx.GetLength(0); i++)
+        {
+            for(int j = 0;j < matrx.GetLength(1); j++)
+            {
+                Tmatrx[j,i] = matrx[i,j];
+            }
+        }
+        ConsoleMatrxOutPut(Tmatrx);
+    }
     private static void Main()
     {
         int[,] matrx = new int[5, 7];
@@ -258,6 +286,8 @@
         MaxSumOfElParallelToMainDiagonal(matrx);
         SumOfElInColumnHaventNegEl(matrx);
         MinSumOfModulesOfElParallelToSideDiagonal(matrx);
+        SumOfElInColumnHaveLeastOneNegEl(matrx);
+        TranspondedMatrix(matrx);
     }
 }
 
