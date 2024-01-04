@@ -1,8 +1,22 @@
 ﻿internal class Program
 {
-    static void ConsoleOutPut(string str, int number)
+    static void ConsoleCreateMatrix(out int N, out int M)
     {
         Console.OutputEncoding = System.Text.Encoding.Default;
+        Console.WriteLine("Введіть кількість рядків матриці:");
+        int.TryParse(Console.ReadLine(), out N);
+        Console.WriteLine("Введіть кількість стовпців матриці:");
+        int.TryParse(Console.ReadLine(), out M);
+        CheckSize(N, M);
+    }
+    static void CheckSize(int N, int M)
+    {
+        if (N <= 0 || M <= 0)
+            throw new Exception("Неправильно введенні дані");
+    }
+
+    static void ConsoleOutPut(string str, int number)
+    {
         Console.WriteLine($"{str} {number}");
     }
     static void ConsoleException(string str)
@@ -273,7 +287,9 @@
     }
     private static void Main()
     {
-        int[,] matrx = new int[5, 7];
+        int N, M;
+        ConsoleCreateMatrix(out N, out M);
+        int[,] matrx = new int[N,M];
         MatrxAdd(matrx);
         ConsoleMatrxOutPut(matrx);
         PositiveNumbers(matrx);
@@ -290,4 +306,3 @@
         TranspondedMatrix(matrx);
     }
 }
-
